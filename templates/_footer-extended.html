@@ -1,0 +1,19 @@
+<footer class="footer-extended">
+	
+	{% set categories_line_margin = False %}
+	{% include '_categories-line.html' %}
+
+	<svg class="footer-extended__accent">
+		<defs>
+			<linearGradient id="linear-gradient" x1="0.5" y1="1" x2="0.5" gradientUnits="objectBoundingBox">
+				<stop offset="0" stop-color="#f9ffc7"></stop>
+				<stop offset="1" stop-color="#f0ff6d"></stop>
+			</linearGradient>
+		</defs>
+		<path id="Path_3" data-name="Path 3" d="M124.016,36.07l62.76-117.713L313.091-44.3,443.959-81.643l92.176,45.259,75.107-36.207L702.28-28.464,917.357-81.643l33,45.259,101.28-36.207,33,44.127,134.2-53.466,105.172,118Z" transform="translate(-124.016 81.93)" fill="url(#linear-gradient)"></path>
+	</svg>
+
+	{% set footer_extended = True %}
+	{% include '_footer.html' %}
+
+</footer>

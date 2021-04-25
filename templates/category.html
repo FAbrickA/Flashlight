@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<link rel="stylesheet" href="{{ url_for(static_path, filename='css/main.min.css') }}">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0"/>
+	<title>{{ title }}</title>
+</head>
+<body>
+
+	{% include '_header.html' %}
+
+	<main class="main">
+		<section class="category">
+			<div class="container relative">
+				<h3 class="title-32 category__title">{{ title }}</h3>
+				<div class="category__projects">
+
+					{% for project in projects %}
+						<a href="/project/{{ project.id }}" class="category__project">
+							<div class="category__project__img__wrapper">
+								<img
+									src="{{ url_for(static_path, filename=project.image_path) }}"
+									class="category__project__img">
+								<div class="progress-line__wrapper category__project__progress-line__wrapper">
+									<div
+										class="progress-line category__project__progress-line"
+										id="progress-line-{{ loop.index }}"
+									>
+										<style type="text/css">
+											#progress-line-{{ loop.index }}:after {
+												width: {{ project.max_100_founded_percent }}%;
+											}
+										</style>
+									</div>
+								</div>
+							</div>
+							<h5 class="title-16 category__project__title">{{ project.name }}</h5>
+							<p class="text-14 category__project__desc">{{ project.short_desc }}</p>
+							<span class="text-12 category__project__author">By <u>{{ project.author_name }}</u></span>
+						</a>
+					{% endfor %}
+					
+				</div>
+				<button class="dark-button category__load-more-button">Загрузить ещё</button>
+			</div>
+		</section>
+	</main>
+
+	{% include '_footer-extended.html' %}
+
+</body>
+</html>

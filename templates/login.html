@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<link rel="stylesheet" href="{{ url_for(static_path, filename='css/main.min.css') }}">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0"/>
+	<title>{{ title }}</title>
+</head>
+<body>
+
+	<div class="registration-window">
+		<div class="registration-window__nav-wrapper">
+			{% include '_nav-bar.html' %}
+		</div>
+
+		<main class="registration-window__content">
+			<h3 class="title-24 registration-window__title">{{ title }}</h3>
+			{% if error %}<span>{{ error }}</span>{% endif %}
+			<form class="registration-window__form" method="post">
+				{{ form.hidden_tag() }}
+				{{ form.login(type="text",
+					class="input registration-window__input",
+					maxlength="100",
+					placeholder="Логин / пароль") }}
+				{% for error in form.login.errors %}
+					{{ error }}
+				{% endfor %}
+				{{ form.password(type="password",
+					class="input registration-window__input",
+					maxlength="100",
+					placeholder="Пароль") }}
+				{% for error in form.password.errors %}
+					{{ error }}
+				{% endfor %}
+				<label class="registration-window__checkbox__label">
+					{{ form.remember_me(type="checkbox",
+						class="checkbox registration-window__checkbox") }}
+					<span class="title-18 registration-window__checkbox__text">Запомнить меня</span>
+				</label>
+				{% for error in form.remember_me.errors %}
+					{{ error }}
+				{% endfor %}
+				{{ form.submit(class="dark-button registration-window__submit",
+					type="submit",
+					text="Зарегистрироваться") }}
+			</form>
+		</main>
+
+		<div class="registration-window__footer-wrapper">
+			{% set footer_extended = False %}
+			{% include '_footer.html' %}
+		</div>
+
+	</div>
+
+	<script>
+		function fitSize() {
+			document.querySelector(".registration-window").style.height = 
+				Math.floor(document.documentElement.clientHeight) + "px";
+		}
+
+		fitSize();
+		window.addEventListener('resize', fitSize);
+	</script>
+
+</body>
+</html>

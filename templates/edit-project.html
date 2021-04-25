@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<link rel="stylesheet" href="{{ url_for(static_path, filename='css/main.min.css') }}">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0"/>
+	<title>{{ title }}</title>
+</head>
+<body>
+
+	{% include '_header.html' %}
+
+	<main class='main'>
+		<form class="container" action="" method="post" enctype="multipart/form-data">
+			{{ form.hidden_tag() }}
+			<h2 class="title-32 edit-project__main-title">{{ title }}</h2>
+			{{ errorr }}
+			{% for error in form.upload_photo.errors %}
+				{{ error }}<br>
+			{% endfor %}
+			<div class="edit-project__control-buttons">
+				<label class="dark-button edit-project__upload-photo">
+					Загрузить фото
+					{{ form.upload_photo(
+						style="position: absolute; width: 0; height: 0; overflow: hidden; z-index: -99999; opacity: 0; border: none; outline: none;")
+					}}
+				</label>
+<!--				<button class="dark-button edit-project__upload-photo">Загрузить фото</button>-->
+				<label class="accent-button__wrapper edit-project__edit-button__wrapper">
+					{{ form.submit(
+						style="position: absolute; width: 0; height: 0; overflow: hidden; z-index: -99999; opacity: 0; border: none; outline: none;")
+					}}
+					<span class="accent-button edit-project__edit-button" style="z-index: 100">
+						<span class="accent-button__text edit-project__edit-button__text">
+							{{ submit_button_text }}
+						</span>
+					</span>
+				</label>
+			</div>
+			<div class="edit-project__editing">
+				<div class="edit-project__budget">
+					{% for error in form.budget.errors %}
+						{{ error }}<br>
+					{% endfor %}
+					<span class="title-20 edit-project__editing__name edit-project__budget__name">Бюджет:</span>
+					{% if not form.budget.data %}
+						{{ form.budget(
+							type="text",
+							maxlength="15",
+							value="5000",
+							class="input edit-project__editing__value edit-project__budget__value")
+						}}
+					{% else %}
+						{{ form.budget(
+							type="text",
+							maxlength="15",
+							class="input edit-project__editing__value edit-project__budget__value")
+						}}
+					{% endif %}
+
+<!--					<input type="text" maxlength="15" value="5000" class="input edit-project__editing__value edit-project__budget__value">-->
+					<span class="title-24 edit-project__budget__currency-char">₽</span>
+					<span class="text-14 edit-project__budget__desc">Обратите внимание, что если необходимая сумма не будет набрана по истечении 30 дней, то все собранные средства вернутся спонсорам</span>
+				</div>
+				<div class="edit-project__title">
+					{% for error in form.title.errors %}
+						{{ error }}<br>
+					{% endfor %}
+					<span class="title-20 edit-project__editing__name edit-project__title__name">Заголовок:</span>
+					{{ form.title(
+						type="text",
+						maxlength="50",
+						placeholder="Заголовок",
+						class="input edit-project__editing__value edit-project__title__value")
+					}}
+<!--					<input type="text" maxlength="50" placeholder="Заголовок" class="input edit-project__editing__value edit-project__title__value">-->
+				</div>
+				<div class="edit-project__short-desc">
+					{% for error in form.short_desc.errors %}
+						{{ error }}<br>
+					{% endfor %}
+					<span class="title-20 edit-project__editing__name edit-project__short-desc__name">Краткое описание:</span>
+					{{ form.short_desc(
+						type="text",
+						maxlength="100",
+						placeholder="Краткое описание",
+						class="input edit-project__editing__value edit-project__short-desc__value")
+					}}
+<!--					<input type="text" maxlength="100" placeholder="Краткое описание" class="input edit-project__editing__value edit-project__short-desc__value">-->
+				</div>
+				<div class="edit-project__categories-block">
+					<span class="title-20 edit-project__editing__name edit-project__categories-block__name">Категории:</span>
+					<div class="edit-project__categories">
+						{% for category in categories %}
+							<label class="edit-project__category__label">
+								<input
+										type="checkbox"
+										id="category-{{ category.id }}"
+										name="category-{{ category.id }}"
+										class="checkbox edit-project__category"
+										{% if category.id in project_categories%}checked{% endif %}>
+								<span class="edit-project__category__text">{{ category.name }}</span>
+							</label>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="edit-project__full-desc">
+					{% for error in form.full_desc.errors %}
+						{{ error }}<br>
+					{% endfor %}
+					<span class="title-20 edit-project__editing__name edit-project__full-desc__name">Полное описание:</span>
+					{{ form.full_desc(
+						class="input edit-project__full-desc__textarea",
+						maxlength="30000")
+					}}
+<!--					<textarea class="input edit-project__full-desc__textarea" maxlength="30000"></textarea>-->
+				</div>
+			</div>
+			<label class="accent-button__wrapper edit-project__edit-button__wrapper" style="margin: 0 auto; display: block; width: 250px; margin-bottom: 100px;">
+				{{ form.submit(
+					style="position: absolute; width: 0; height: 0; overflow: hidden; z-index: -99999; opacity: 0; border: none; outline: none;")
+				}}
+				<span class="accent-button edit-project__edit-button" style="z-index: 100">
+
+					<span class="accent-button__text edit-project__edit-button__text">
+						{{ submit_button_text }}
+					</span>
+				</span>
+			</label>
+		</form>
+		
+	</main>
+
+	{% include '_footer-extended.html' %}
+
+</body>
+</html>

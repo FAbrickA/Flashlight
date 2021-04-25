@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<link rel="stylesheet" href="{{ url_for(static_path, filename='css/main.min.css') }}">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0"/>
+	<title>Document</title>
+</head>
+<body>
+
+	<div class="payment-window">
+		<div class="payment-window__nav-wrapper">
+			{% include '_nav-bar.html' %}
+		</div>
+
+		<main class="payment-window__content">
+			<div class="container">
+				<h3 class="title-32 payment-window__title">{{ project.name }}</h3>
+				<h4 class="title-24 payment-window__post-title">Оплата</h4>
+				<form class="payment-window__form" method="post">
+					{{ form.hidden_tag() }}
+					{% for error in form.payment.errors %}
+						{{ error }}<br>
+					{% endfor %}
+					<label class="payment-window__pay-input__label">
+						{% if form.payment.data %}
+							{{ form.payment(
+								class="input payment-window__pay-input",
+								maxlength="15")
+							}}
+						{% else %}
+							{{ form.payment(
+								class="input payment-window__pay-input",
+								maxlength="15",
+								value="100")
+							}}
+						{% endif %}
+<!--						<input type="text" class="input payment-window__pay-input" maxlength="15">-->
+						<span class="title-24 payment-window__pay-input__currency-sign">₽</span>
+					</label>
+					{{ form.submit(class="dark-button payment-window__submit") }}
+<!--					<button class="dark-button payment-window__submit">Внести</button>-->
+				</form>
+			</div>
+		</main>
+
+		<div class="payment-window__footer-wrapper">
+			{% set footer_extended = False %}
+			{% include '_footer.html' %}
+		</div>
+
+	</div>
+
+	<script>
+		function fitSize() {
+			document.querySelector(".payment-window").style.minHeight = 
+				Math.floor(document.documentElement.clientHeight) + "px";
+		}
+		
+		fitSize();
+		window.addEventListener('resize', fitSize);
+	</script>
+
+</body>
+</html>

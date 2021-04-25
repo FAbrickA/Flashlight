@@ -1,0 +1,12 @@
+<nav class="container nav">
+	<a href="/"><span class="nav__logo">Flashlight</span></a>
+	<ul class="nav__menu">
+        {% if current_user.is_authenticated %}
+            <a href="/user_account/{{ current_user.id }}"><li class="nav__menu-elem">{{ current_user.login }}</li></a>
+            <a href="/logout"><li class="nav__menu-elem">Выход</li></a>
+        {% else %}
+            <a href="/login"><li class="nav__menu-elem">Вход</li></a>
+            <a href="/registration"><li class="nav__menu-elem">Регистрация</li></a>
+        {% endif %}
+	</ul>
+</nav>

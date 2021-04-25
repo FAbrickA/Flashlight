@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<link rel="stylesheet" href="{{ url_for(static_path, filename='css/main.min.css') }}">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0"/>
+	<title>{{ title }}</title>
+</head>
+<body>
+
+	{% include '_header.html' %}
+
+	<main class='main'>
+		<section class='project__wrapper'>
+			<div class="container relative">
+				<div class="project">
+					<h3 class="title-32 project__title">{{ project.name }}</h3>
+					<p class="text-24 project__desc">{{ project.short_desc }}</p>
+					<div class="project__info-block">
+						<img src="{{ url_for(static_path, filename=project.image_path) }}" class="project__img">
+						<div class="project__statistic">
+							<div class="progress-line__wrapper project__founded-line__wrapper">
+								<div class="progress-line project__founded-line">
+									<style type="text/css">
+										.project__founded-line:after {
+											width: {{ project.max_100_founded_percent }}%;
+										}
+									</style>
+								</div>
+							</div>
+							<div class="project__category project__category_accent">
+								<span class="project__category__value">
+									<span id="project_founded">{{ project.founded }}</span> ₽
+								</span>
+								<span class="text-18 project__category__desc">
+									заложено из <span id="project_budget">{{ project.budget }}</span> ₽
+								</span>
+							</div>
+							<div class="project__category">
+								<span class="project__category__value">100</span>
+								<span class="text-18 project__category__desc">спонсоров поддержало проект</span>
+							</div>
+							<div class="project__category">
+								<span class="project__category__value">{{ project.days_left }}</span>
+								<span class="text-18 project__category__desc">дней до окончания сборов</span>
+							</div>
+							<a href="/project/support/{{ project.id }}" class="accent-button__wrapper project__support-button__wrapper">
+								<div class="accent-button project__support-button">
+									<span class="accent-button__text project__support-button__text">
+										Поддержать проект
+									</span>
+								</div>
+							</a>
+							<button type='button' class="dark-button project__pin-button">Закрепить</button>
+							{% if current_user.is_authenticated and project.author_id == current_user.id %}
+								<a href="/project/edit/{{ project.id }}"
+								   class="dark-button project__pin-button"
+								   style="margin-top: 20px">Редактировать</a>
+							{% endif %}
+						</div>
+					</div>
+					<div class="project__content-block">
+						<h3 class="title-32 project__desc-title">Описание проекта</h3>
+						{% for paragraph in project.full_desc %}
+							<p class="text-18 project__content-paragraph">{{ paragraph }}</p>
+						{% endfor %}
+					</div>
+					<div class="accent-button__wrapper project__support-button__wrapper" style="margin: 60px auto; display: block;">
+						<a href="/project/support/{{ project.id }}" class="accent-button project__support-button">
+							<span class="accent-button__text project__support-button__text">
+								Поддержать проект
+							</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	
+	{% include '_footer-extended.html' %}
+
+</body>
+</html>

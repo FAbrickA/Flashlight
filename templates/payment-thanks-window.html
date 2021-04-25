@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<link rel="stylesheet" href="{{ url_for(static_path, filename='css/main.min.css') }}">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0"/>
+	<title>{{ title }}</title>
+</head>
+<body>
+
+	<div class="payment-thanks-window">
+		<div class="payment-thanks-window__nav-wrapper">
+			{% include '_nav-bar.html' %}
+		</div>
+
+		<main class="payment-thanks-window__content">
+			<div class="container">
+				<h2 class="title-40 payment-thanks-window__title">{{ title }}</h2>
+				<div class="payment-thanks-window__buttons-nav">
+					<a href="/project/{{ project_id }}" class="dark-button payment-thanks-window__button-back">{{ button_back_text }}</a>
+					<a href="/" class="dark-button payment-thanks-window__button-to-main">На главную</a>
+				</div>
+			</div>
+		</main>
+
+		<div class="payment-thanks-window__footer-wrapper">
+			{% set footer_extended = False %}
+			{% include '_footer.html' %}
+		</div>
+
+	</div>
+
+	<script>
+		function fitSize() {
+			document.querySelector(".payment-thanks-window").style.height = 
+				Math.floor(document.documentElement.clientHeight) + "px";
+		}
+		
+		fitSize();
+		window.addEventListener('resize', fitSize);
+	</script>
+
+</body>
+</html>

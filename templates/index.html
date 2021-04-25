@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<link rel="stylesheet" href="{{ url_for(static_path, filename='css/main.min.css') }}">
+	<link rel="stylesheet" href="{{ url_for(static_path, filename='libs/owl-carousel-2/assets/owl.carousel.min.css') }}">
+	<link rel="stylesheet" href="{{ url_for(static_path, filename='libs/owl-carousel-2/assets/owl.theme.default.min.css') }}">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0"/>
+	<script>
+		"use strict";
+		let carouselsArr = []
+	</script>
+	<title>{{ title }}</title>
+</head>
+<body>
+
+	{% include '_header-extended.html' %}
+
+	<main class="main-content">
+		<section class="title-projects__wrapper">
+			<div class="container relative title-projects">
+				<svg class="title-projects__accent-light">
+					<defs>
+						<linearGradient id="linear-gradient" x1="0.102" y1="-0.028" x2="0.851" y2="0.847" gradientUnits="objectBoundingBox">
+							<stop offset="0" stop-color="#f0ff6d"></stop>
+							<stop offset="1" stop-color="#f9ffc7"></stop>
+						</linearGradient>
+					</defs>
+					<path id="Path_2" data-name="Path 2" d="M272.015-2019.949,851.968-1649.9,491.955-1338.949l-375.987-681Z" transform="translate(-115.968 2019.949)" fill="url(#linear-gradient)"></path>
+				</svg>
+
+				<div class="left-side">
+					<span class="left-side__title">Избранный проект</span>
+					<a href="/project/{{ welcome_project['id'] }}" class="left-side__project-link">
+						<div class="left-side__img__wrapper">
+							<img src="{{ url_for(static_path, filename=welcome_project['image_path']) }}" class="left-side__img">
+							<div class="progress-line__wrapper left-side__progress-line__wrapper">
+								<div class="progress-line left-side__progress-line">
+									<style type="text/css">
+										.left-side__progress-line:after {
+											width: {{ welcome_project['max_100_founded_percent'] }}%;
+										}
+									</style>
+								</div>
+							</div>
+						</div>
+						<div class="left-side__content">
+							<h3 class="title-24 left-side__project-title" style="display: block">{{ welcome_project['name'] }}</h3>
+							<p class="text-18 left-side__text" style="display: block">{{ welcome_project['short_desc'] }}</p>
+							<span class="text-14 left-side__author" style="display: block">
+								By <u>{{ welcome_project['author_name'] }}</u>
+							</span>
+						</div>
+					</a>
+				</div>
+				<div class="title-projects__vertical-border"></div>
+				<div class="right-side">
+					<span class="right-side__title">Рекомендовано вам</span>
+					<div class="right-side__cards">
+						{% for project in recommended_projects %}
+							<a href="/project/{{ project.id }}">
+								<div class="right-side__card">
+									<img src="{{ url_for(static_path, filename=project.image_path) }}" class="right-side__card__img">
+									<div class="title-16 right-side__card__title">{{ project.name }}</div>
+									<div class="right-side__card__founded">{{ project.founded_percent}} % собрано</div>
+									<div class="text-12 right-side__card__author">By <u>{{ project.author_name }}</u></div>
+								</div>
+							</a>
+						{% endfor %}
+					</div>
+					<a href="/category/recommended"><div class="dark-button right-side__next-button">Далее</div></a>
+
+				</div>
+			</div>	
+		</section>
+
+		{% for block in blocks %}
+			<section class="projects-slider-horizontal__wrapper">
+				<div class="container">
+					<a href="{{ block.link }}"><h3 class="projects-slider-horizontal__main-title">{{ block.title }}</h3></a>
+					<div class="owl-carousel projects-slider-horizontal" id="{{ block.id }}">
+						{% for project in block.projects %}
+							<a href="/project/{{ project.id }}">
+								<div class="projects-slider-horizontal__card">
+									<div class="projects-slider-horizontal__img__wrapper">
+										<img
+											src="{{ url_for(static_path, filename=project.image_path) }}"
+											class="projects-slider-horizontal__img">
+										<div class="progress-line__wrapper projects-slider-horizontal__progress-line__wrapper">
+											<div
+												class="progress-line projects-slider-horizontal__progress-line"
+												id="{{ block.id }}_progress-line_{{ loop.index }}"
+											>
+												<style type="text/css">
+													#{{ block.id }}_progress-line_{{ loop.index }}:after {
+														width: {{ project.max_100_founded_percent }}%;
+													}
+												</style>
+											</div>
+										</div>
+									</div>
+									<h5 class="title-16 projects-slider-horizontal__title">{{ project.name }}</h5>
+									<p class="text-14 projects-slider-horizontal__desc">{{ project.short_desc }}</p>
+									<span class="text-12 projects-slider-horizontal__author">By <u>{{ project.author_name }}</u></span>
+								</div>
+							</a>
+						{% endfor %}
+					</div>
+				</div>
+
+				<script>
+					try {
+						carouselsArr.push('#{{ block.id }}')
+					} catch (e) {
+						let carouselsArr = ['#{{ block.id }}']
+					}
+				</script>
+			</section>
+		{% endfor %}
+
+	</main>
+
+	{% include '_footer-extended.html' %}
+
+	<script src="{{ url_for(static_path, filename='libs/jquery/jquery-3.6.0.min.js') }}"></script>
+	<script src="{{ url_for(static_path, filename='libs/owl-carousel-2/owl.carousel.min.js') }}"></script>
+	<script src="{{ url_for(static_path, filename='js/script.min.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<link rel="stylesheet" href="{{ url_for(static_path, filename='css/main.min.css') }}">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0"/>
+	<title>{{ title }}</title>
+</head>
+<body>
+
+	<div class="personal-account">
+		<div class="personal-account__nav-wrapper">
+			{% include '_nav-bar.html' %}
+		</div>
+
+		<main class="container personal-account__content">
+			<div class="personal-account__left-side">
+				<h3 class="title-32 personal-account__title">Личный кабинет</h3>
+				<div class="personal-account__left-side__parts">
+					<div class="personal-account__left-side__left">
+						<div class="personal-account__photo"></div>
+						<button class="dark-button personal-account__upload-photo-button">Загрузить фотографию</button>
+					</div>
+					<div class="personal-account__left-side__right">
+						<div class="personal-account__info-line personal-account__info-line_user">
+							<span class="title-24 personal-account__info-line__title">Пользователь:</span>
+							<span class="text-24 personal-account__info-line__value">{{ user.login }}</span>
+						</div>
+						<div class="personal-account__info-line personal-account__info-line_email">
+							<span class="title-24 personal-account__info-line__title">Email:</span>
+							<span class="text-24 personal-account__info-line__value">{{ user.email }}</span>
+						</div>
+						<span class="title-24 personal-account__info-line__title" style="display: block; margin-bottom: 10px;">О себе:</span>
+						<textarea class="input personal-account__info-line__textarea" placeholder="Кто вы \ ваши увлечения \ всё, что посчитаете нужным" maxlength="1000"></textarea>
+					</div>
+				</div>
+				<div class="personal-account__control-buttons">
+					<button class="dark-button personal-account__save-button">Сохранить изменения</button>
+					<button onClick="window.location.reload();" class="dark-button personal-account__cancel-button">Отмена</button>
+				</div>
+			</div>
+			<div class="personal-account__right-side">
+				<button class="dark-button personal-account__pinned-projects-button">Закреплённые проекты</button>
+				<a href="/category/user_projects/{{ user.id }}" class="dark-button personal-account__my-projects-button">Мои проекты</a>
+			</div>
+		</main>
+
+		<div class="personal-account__footer-wrapper">
+			{% set footer_extended = False %}
+			{% include '_footer.html' %}
+		</div>
+
+	</div>
+
+	<script>
+		function fitSize() {
+			document.querySelector(".personal-account").style.height = 
+				Math.floor(document.documentElement.clientHeight) + "px";
+		}
+		
+		fitSize();
+		window.addEventListener('resize', fitSize);
+	</script>
+
+</body>
+</html>

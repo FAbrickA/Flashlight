@@ -1,0 +1,13 @@
+{% if not footer_extended %}<footer class="footer">{% endif %}
+
+	<div class="footer__line"  {% if footer_extended %}style="margin-top: 95px;"{% endif %}>
+		<div class="container">
+			<ul class="footer__links">
+				<a href="#!" class="footer__link"><li class="footer__elem">О нас</li></a>
+				<a href="#!" class="footer__link"><li class="footer__elem">Безопасность</li></a>
+				<a href="#!" class="footer__link"><li class="footer__elem">Правила</li></a>
+			</ul>
+		</div>
+	</div>
+
+{% if not footer_extended %}</footer>{% endif %}
